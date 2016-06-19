@@ -55,13 +55,13 @@
     }
 
     th {
-        height: 56px;
+        height: 35px;
         @include font-size(12px);
         font-weight: 400;
-        color: $black-2;
+        color: $grey-1000;
         text-align: left;
         white-space: nowrap;
-
+        background-color:#F5F6FA;
         i {
             margin-right: $base-spacing-unit / 2;
         }

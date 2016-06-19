@@ -69,7 +69,8 @@
                 ngModel: '=',
                 selectionToModel: '&?lxSelectionToModel',
                 theme: '@?lxTheme',
-                valid: '=?lxValid'
+                valid: '=?lxValid',
+                trackBy:'@?lxTrackBy'
             },
             link: link,
             controller: LxSelectController,
@@ -81,7 +82,7 @@
 
         function link(scope, element, attrs)
         {
-            var backwardOneWay = ['customStyle'];
+            var backwardOneWay = ['customStyle','trackBy'];
             var backwardTwoWay = ['allowClear', 'choices', 'error', 'loading', 'multiple', 'valid'];
 
             angular.forEach(backwardOneWay, function(attribute)
@@ -244,7 +245,21 @@
             }
             else
             {
-                return lxSelect.ngModel;
+                if(angular.isDefined(lxSelect.trackBy))
+                {
+                    for(var idx=0;idx<lxSelect.choices.length;idx++)
+                    {
+                        var item=lxSelect.choices[idx];
+                        if(angular.equals(item[lxSelect.trackBy],lxSelect.ngModel))
+                        {
+                            return item;
+                        }
+                    }
+                }
+                else
+                {
+                    return lxSelect.ngModel;
+                }
             }
         }
 
@@ -291,7 +306,14 @@
                 }
                 else
                 {
-                    lxSelect.ngModel = _choice;
+                    if(angular.isDefined(lxSelect.trackBy))
+                    {
+                        lxSelect.ngModel=_choice[lxSelect.trackBy];
+                    }
+                    else
+                    {
+                        lxSelect.ngModel = _choice;
+                    }
                 }
             }
         }

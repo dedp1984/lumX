@@ -180,6 +180,10 @@
         {
             lxTextField.isActive = hasValue();
             lxTextField.isFocus = false;
+            if(angular.isDefined(input[0].attributes.required))
+            {
+                lxTextField.label+='(必输项)';
+            }
         }
 
         function setInput(_input)
